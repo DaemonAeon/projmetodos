@@ -1,5 +1,6 @@
 //main.cpp
 #include <iostream>
+#include <string>
 #include "newton.h"
 #include "pluq.h"
 #include "gauss.h"
@@ -33,6 +34,23 @@ int main(int argc, char* argv[]){
 			break;
 			case '3':{
 				//Cuadratura de Gauss
+				int n;
+				string func;
+				int a;
+				int b;
+
+				cout << "Ingrese cantidad de puntos (2-4): ";
+				cin >> n;
+				cout << "Ingrese función: ";
+				cin >> func;
+				cout << endl;
+				cout << "Ingrese el límite superior: ";
+				cin >> b;
+				cout << "Ingrese el límite inferior: ";
+				cin >> a;
+
+				gauss g(n, a, b, func);
+				cout << g.eval();
 			}
 			break;
 			case '4':{
