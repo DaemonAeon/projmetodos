@@ -10,8 +10,9 @@ using namespace std;
 
 int main(int argc, char* argv[]){
 		cout << "********************Proyecto de Métodos Numéricos********************" << endl;
-		cout << "Integrantes: " << endl;
+		cout << "Integrantes:" << endl;
 		cout << "David Discua" << endl;
+		cout << "Gisselle Lagos" << endl;
 		cout << "Katherine Lozano" << endl;
 		cout << "Carlos Morazán" << endl;
 		cout << "*********************************************************************" << endl;
