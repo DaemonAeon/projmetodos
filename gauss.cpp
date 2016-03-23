@@ -1,15 +1,47 @@
 //gauss.cpp
 #include "gauss.h"
 #include "exprtk.hpp"
+#include <iostream>
 gauss::gauss(){
 
 }
 
-gauss::gauss(int n, float a, float b, std::string func){
+gauss::gauss(int n, std::string a, std::string b, std::string func){
 	this->n = n;
 	this->a = a;
 	this->b = b;
 	this->func = func;
+
+
+	typedef exprtk::symbol_table<double> symbol_table_t;
+	typedef exprtk::expression<double> expression_t;
+	typedef exprtk::parser<double> parser_t;
+
+	symbol_table_t symbol_table1, symbol_table2;
+	expression_t expression1, expression2;
+	parser_t parser;
+
+	double upper = 0;
+	double lower = 0;
+
+	symbol_table1.add_variable("b", upper);
+	symbol_table2.add_variable("a", lower);
+
+	expression1.register_symbol_table(symbol_table1);
+	expression2.register_symbol_table(symbol_table2);
+
+	parser.compile(b, expression1);
+	upper = expression1.value();
+	
+	parser.compile(a, expression2);
+	lower = expression2.value();
+
+	outerConstant = (upper - lower) / 2;
+	innerConstant = (upper + lower) / 2;
+
+	std::cout << "outer:" << outerConstant << std::endl;
+	std::cout << "inner:" << innerConstant << std::endl;
+
 }
 
 gauss::~gauss(){
@@ -25,8 +57,6 @@ double gauss::integr2pts(){
 	expression_t expression;
 	parser_t parser;
 
-	double outerConstant = (b - a)/2;
-	double innerConstant = (b + a)/2;
 	double eval1 = (outerConstant * -0.5773502691896257) + innerConstant;
 	double eval2 = (outerConstant * 0.5773502691896257) + innerConstant;
 
@@ -53,8 +83,6 @@ double gauss::integr3pts(){
 	expression_t expression;
 	parser_t parser;
 
-	double outerConstant = (b - a)/2;
-	double innerConstant = (b + a)/2;
 	double eval1 = innerConstant;
 	double eval2 = (outerConstant * -0.7745966692414834) + innerConstant;
 	double eval3 = (outerConstant *	0.7745966692414834) + innerConstant;
@@ -86,8 +114,6 @@ double gauss::integr4pts(){
 	expression_t expression;
 	parser_t parser;
 
-	double outerConstant = (b - a)/2;
-	double innerConstant = (b + a)/2;
 	double eval1 = (outerConstant * -0.3399810435848563) + innerConstant;
 	double eval2 = (outerConstant * 0.3399810435848563) + innerConstant;
 	double eval3 = (outerConstant *	-0.8611363115940526) + innerConstant;
