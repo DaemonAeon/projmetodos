@@ -1,6 +1,8 @@
 //main.cpp
 #include <iostream>
 #include <string>
+#include <vector>
+#include <iomanip>
 #include "newton.h"
 #include "pluq.h"
 #include "gauss.h"
@@ -22,11 +24,28 @@ int main(int argc, char* argv[]){
 		cout << "2) Inversa de una matriz por PLUQ" << endl;
 		cout << "3) Cuadratura de Gauss" << endl;
 		cout << "4) Diferencia finita" << endl;
+		cout << "5) Salir" << endl;
 		char c;
 		cin >> c;
 		switch(c){
 			case '1':{
 				//Newton-Raphson
+				string f, g;
+				double xo, tol, x;
+				cout << endl;
+				cout << "Ingrese f(x): ";
+				cin >> f;
+				cout << "Ingrese f'(x): ";
+				cin >> g;
+				cout << "Ingrese Xo: ";
+				cin >> xo;
+				cout << "Ingrese la toleracia deseada: ";
+				cin >> tol;
+				cout << endl;
+				newton nR(xo, tol, f, g);
+				x = nR.eval();
+				cout.precision(6);
+				cout << setw(5) << "Valor de x: " << x << endl;	
 			}
 			break;
 			case '2':{
