@@ -3,10 +3,10 @@
 #include <string>
 #include <vector>
 #include <iomanip>
-//#include "newton.h"
+#include "newton.h"
 #include "pluq.h"
-//#include "gauss.h"
-//#include "diferencia.h"
+#include "gauss.h"
+#include "diferencia.h"
 
 using namespace std;
 
