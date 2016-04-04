@@ -203,26 +203,25 @@ void pluq::calculate(){
 
 void pluq::lu(){
 	int i = 0, j = 0, k = 0;
-	for(j=0; j<n; j++){
-		for(i=0; i<n; i++){
-		    if(i<=j){
-		        U[i][j]=A[i][j];
-		        for(k=0; k<i-1; k++)
-		            U[i][j]-=L[i][k]*U[k][j];
-		        if(i==j)
-		            L[i][j]=1;
-		        else
-		            L[i][j]=0;
-		    }
-		    else{
-		        L[i][j]=A[i][j];
-		        for(k=0; k<=j-1; k++)
-		            L[i][j]-=L[i][k]*U[k][j];
-		        L[i][j]/=U[j][j];
-		        U[i][j]=0;
-		    }
+	for(k=0;k<n;k++) {
+		L[k][k]=1;
+	 
+		for(j=k;j<n;j++) {
+			long double sum=0;
+			for(int s=0;s<=k-1;s++) {
+			    sum+= L[k][s]*U[s][j];
+			}
+			U[k][j]=A[k][j]-sum;
 		}
-    }
+	 
+		for(i=k+1;i<n;i++) {
+			long double sum=0;
+			for(int s=0;s<=k-1;s++) {
+			    sum+=L[i][s]*U[s][k];
+			}
+			L[i][k]=(A[i][k]-sum)/U[k][k];
+		}
+	}
 
 }
 
