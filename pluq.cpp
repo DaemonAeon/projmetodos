@@ -55,7 +55,7 @@ void pluq::calculate(){
 		double max=U[i][i];
 		int f=i;
 		int c=i;
-		for (int j = i; j < n; j++){
+		for (int j = i+1; j < n; j++){
 			for (int k = 0; k < n; k++){
 				if (U[j][k]>max){
 					max=U[j][k];
@@ -89,8 +89,6 @@ void pluq::calculate(){
 			U[j][c]=temp;
 		}
 
-		//L y U
-		int h = 0;
 		bool pos=false;
 		for (int j = i+1; j < n; j++){
 			double l = U[j][i]/U[i][i];
@@ -102,11 +100,14 @@ void pluq::calculate(){
 				L[j][i]=l;
 				pos=true;
 			}
-			for (int k = j - h; k < n; k++){
-				U[j][k]=U[j][k]+U[i][k]*((U[j][i]*-1)/U[i][i]);
+			for (int k = 0; k < n; k++){
+				if (!pos){
+					U[j][k]=U[j][k]+U[i][k]*l;
+				} else {
+					U[j][k]=U[j][k]-U[i][k]*l;
+				}
 			}
-			U[j][i] = 0;
-			h++;
+			U[j][i]=0;
 		}
 
 	}
@@ -145,96 +146,54 @@ void pluq::calculate(){
 		}
 	}
 	//Imprimir las matrices
-	cout << setw(15) << "P" << endl;
+	cout << "P" << endl;
 	for (int j = 0; j < n; j++){
 		for (int k = 0; k < n; k++){
-			cout << setw(10) << setprecision(2) << P[j][k];
+			cout << setw(15) << setprecision(6) << P[j][k];
 		}
 		cout << endl;
 	}
 	cout << endl;
-	cout << setw(15) << "A" << endl;
+	cout << "A" << endl;
 	for (int j = 0; j < n; j++){
 		for (int k = 0; k < n; k++){
-			cout << setw(10) << setprecision(2) << A[j][k];
+			cout << setw(15) << setprecision(6) << A[j][k];
 		}
 		cout << endl;
 	}
 	cout << endl;
-	cout << setw(15) << "Q" << endl;
+	cout << "Q" << endl;
 	for (int j = 0; j < n; j++){
 		for (int k = 0; k < n; k++){
-			cout << setw(10) << setprecision(2) << Q[j][k];
+			cout << setw(15) << setprecision(6) << Q[j][k];
 		}
 		cout << endl;
 	}
 	cout << endl;
-	cout << setw(15) << "L" << endl;
+	cout << "L" << endl;
 	for (int j = 0; j < n; j++){
 		for (int k = 0; k < n; k++){
-			cout << setw(10) << setprecision(2) << L[j][k];
+			cout << setw(15) << setprecision(6) << L[j][k];
 		}
 		cout << endl;
 	}
 	cout << endl;
-	cout << setw(15) << "U" << endl;
+	cout << "U" << endl;
 	for (int j = 0; j < n; j++){
 		for (int k = 0; k < n; k++){
-			cout << setw(10) << setprecision(2) << U[j][k];
+			cout << setw(15) << setprecision(6) << U[j][k];
 		}
 		cout << endl;
 	}
 	cout << endl;
-	cout << setw(15) << "A Inversa" << endl;
+	cout << "A Inversa" << endl;
 	for (int j = 0; j < n; j++){
 		for (int k = 0; k < n; k++){
-			cout << setw(10) << setprecision(2) << AInversa[j][k];
+			cout << setw(15) << setprecision(6) << AInversa[j][k];
 		}
 		cout << endl;
 	}
 	cout << endl;
-}
-
-void pluq::lu(){
-	int i = 0, j = 0, k = 0;
-
-	double** Atemp = new double*[n];
-	for (int a = 0; a < n; a++){
-		Atemp[a] = new double[n];
-	}
-	for (int a = 0; a < n; a++){
-		for (int b = 0; b < n; b++){
-			Atemp[a][b] = A[a][b];
-		}
-	}
-
-	for(i = 0; i < n; i++)
-		for(j = 0; j < n; j++){
-			Atemp[i][j] = U[i][j];
-			U[i][j] = 0;
-		}
-
-	for(k=0;k<n;k++) {
-		
-		L[k][k]=1;
-	 
-		for(j=k;j<n;j++) {
-			long double sum=0;
-			for(int s=0;s<=k-1;s++) {
-			    sum+= L[k][s]*U[s][j];
-			}
-			U[k][j]=Atemp[k][j]-sum;
-		}
-	 
-		for(i=k+1;i<n;i++) {
-			long double sum=0;
-			for(int s=0;s<=k-1;s++) {
-			    sum+=L[i][s]*U[s][k];
-			}
-			L[i][k]=(Atemp[i][k]-sum)/U[k][k];
-		}
-	}
-
 }
 
 pluq::~pluq(){
