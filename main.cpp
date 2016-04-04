@@ -7,6 +7,7 @@
 #include "pluq.h"
 #include "gauss.h"
 #include "diferencia.h"
+#include "euler.h"
 
 using namespace std;
 
@@ -75,6 +76,91 @@ int main(int argc, char* argv[]){
 			break;
 			case '4':{
 				//Diferencia finita
+					//metodo de euler
+					int Eq_orden = 0;
+					int cal_e =0;
+					string Ecuacion_Dif = "";
+					string Ecuacion_Exacta = "";
+					double C = 1.0;
+					double X_E = 0.0;
+					double X_inicial=0;
+					double Y_inicial=0;
+					int X_n=0;
+					double H = 0;
+					cout<<"Ingrese el método a utlizar 1:Euler , 2:Euler Mejorado"<<endl;
+					cin>>Eq_orden;
+					if(Eq_orden==1){
+							cout<<"Método de Euler"<<endl;
+							cout<< "Ingrese la ecuacion diferencial (Y'= y -x^2 +10)"<<endl;
+							cin>>Ecuacion_Dif;
+							cout<<"Ingrese el valor inicial de X : "<<endl;
+							cin>>X_inicial;
+							cout<<"Ingrese Y("<<X_inicial<<") : "<<endl;
+							cin>>Y_inicial;
+							cout<<"Ingrese el espaciamiento H : "<<endl;
+							cin>>H;
+							cout<<"Ingrese el X_n que desea calcular :"<<endl;
+							cin>>X_n;
+							cout<<"¿Desea calcular el error real? SI:1 NO:2"<<endl;
+							cin>>cal_e;
+
+							if(cal_e==1){
+									X_E = X_n*H;
+									C = Y_inicial;
+								cout<<"====Datos para calular el error==="<<endl;
+								cout<<"Ingrese la solucion a la ecuacion "<<endl;
+								cin>>Ecuacion_Exacta;
+								euler E(X_inicial,Y_inicial,X_n,H,Ecuacion_Dif);
+								cout<< "Resultado : "<<E.getResultado()<<endl;
+								double Solucion = E.Evaluar_O(X_E,C,Ecuacion_Exacta);
+								cout<<"Solucion Real :"<<Solucion<<endl;
+								cout<<"Error : "<<E.Calcular_Error(E.getResultado(),Solucion)<<endl;
+
+							}else{
+								euler E(X_inicial,Y_inicial,X_n,H,Ecuacion_Dif);
+								cout<< "Resultado : "<<E.getResultado()<<endl;
+							}
+
+					}else if(Eq_orden==2){
+						cout<<"Metodo de Euler Mejorado"<<endl;
+						cout<< "Ingrese la ecuacion diferencial (Y'= y -x^2 +10)"<<endl;
+						cin>>Ecuacion_Dif;
+						cout<<"Ingrese el valor inicial de X : "<<endl;
+						cin>>X_inicial;
+						cout<<"Ingrese Y("<<X_inicial<<") : "<<endl;
+						cin>>Y_inicial;
+						cout<<"Ingrese el espaciamiento H : "<<endl;
+						cin>>H;
+						cout<<"Ingrese el X_n que desea calcular :"<<endl;
+						cin>>X_n;
+						cout<<"¿Desea calcular el error real? SI:1 NO:2"<<endl;
+						cin>>cal_e;
+
+						if(cal_e==1){
+								X_E = X_n*H;
+								C = Y_inicial;
+							cout<<"====Datos para calular el error==="<<endl;
+							cout<<"Ingrese la solucion a la ecuacion "<<endl;
+							cin>>Ecuacion_Exacta;
+							euler E;
+							double result = E.EDPO_2(X_inicial,Y_inicial,X_n,H,Ecuacion_Dif);
+							cout<< "Resultado : "<<result<<endl;
+							double Solucion = E.Evaluar_O(X_E,C,Ecuacion_Exacta);
+							cout<<"Solucion Real :"<<Solucion<<endl;
+							cout<<"Error : "<<E.Calcular_Error(result,Solucion)<<endl;
+
+						}else{
+							euler E;
+							double result = E.EDPO_2(X_inicial,Y_inicial,X_n,H,Ecuacion_Dif);
+							cout<< "Resultado : "<<result<<endl;
+						}
+
+
+
+					}else{
+							cout<<"Orden no econtrado"<<endl;
+					}
+
 			}
 			break;
 			default:{
