@@ -89,8 +89,9 @@ void pluq::calculate(){
 			U[j][c]=temp;
 		}
 
+
 		//L y U
-		for (int j = i+1; j < n; j++){
+		/*for (int j = i+1; j < n; j++){
 			if (((U[j][i]*-1)/U[i][i])>0){
 				L[j][i]=U[j][i]/U[i][i];
 				L[j][i]=L[j][i]*-1;
@@ -109,9 +110,13 @@ void pluq::calculate(){
 			}
 			cout << endl;
 		}
-		cout << endl;
+		cout << endl;*/
 
 	}
+
+	//L y U
+	lu();
+
 	//Inversa
 	for (int i = 0; i < n; i++){
 		double* D = new double[n];
@@ -194,6 +199,31 @@ void pluq::calculate(){
 		cout << endl;
 	}
 	cout << endl;
+}
+
+void pluq::lu(){
+	int i = 0, j = 0, k = 0;
+	for(j=0; j<n; j++){
+		for(i=0; i<n; i++){
+		    if(i<=j){
+		        U[i][j]=A[i][j];
+		        for(k=0; k<i-1; k++)
+		            U[i][j]-=L[i][k]*U[k][j];
+		        if(i==j)
+		            L[i][j]=1;
+		        else
+		            L[i][j]=0;
+		    }
+		    else{
+		        L[i][j]=A[i][j];
+		        for(k=0; k<=j-1; k++)
+		            L[i][j]-=L[i][k]*U[k][j];
+		        L[i][j]/=U[j][j];
+		        U[i][j]=0;
+		    }
+		}
+    }
+
 }
 
 pluq::~pluq(){

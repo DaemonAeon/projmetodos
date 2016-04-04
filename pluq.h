@@ -16,6 +16,7 @@ private:
 	double** U;
 	double** AInversa;
 	int n;
+	void lu();
 };
 #endif
 //pluq.h
