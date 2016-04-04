@@ -33,11 +33,14 @@ double newton::eval(){
 	int n = 0;
 	std::vector<double> nrEval;
 	std::vector<double> nrTol; 
-	double evalTol, evalXo, valorRetorno;
+	double evalTol;
 
-	std::string equation;  
+	std::string equation = "x-";
+	std::string stringF = "("+f+")";
+	std::string stringG = "/("+g+")";  
+	equation.append(stringF);
+	equation.append(stringG);
 
-	equation = "x-" +  f + '/' + g;
 	cout << endl << "Ecuación Newton-Raphson: " << equation << endl;
 	cout << endl << setw(5) << "n" << setw(20) << "Xn" << setw(20) << "|Xn - Xn-1|" << endl;
 		
@@ -52,8 +55,8 @@ double newton::eval(){
 			parser.compile(equation,expression);
 
 			nrEval.push_back(expression.value());
-			nrTol.push_back(0);
 			evalTol = 0;
+			nrTol.push_back(evalTol);
 
 		} else {
 
@@ -72,11 +75,9 @@ double newton::eval(){
 		
 		n++;
 		
-	} while (evalTol > tol || evalTol == 0);
+	} while (evalTol >= tol || evalTol == 0);
 	
-	valorRetorno = nrEval[n-1];
-
-	return valorRetorno;
+	return nrEval[n-1];;
 
 }
 

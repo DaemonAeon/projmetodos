@@ -20,11 +20,12 @@ int main(int argc, char* argv[]){
 		cout << "*********************************************************************" << endl;
 	while(true){
 		cout << endl << endl;
-		cout << "1) Newton-Raphson para sistemas" << endl;
-		cout << "2) Inversa de una matriz por PLUQ" << endl;
-		cout << "3) Cuadratura de Gauss" << endl;
-		cout << "4) Diferencia finita" << endl;
-		cout << "5) Salir" << endl;
+		cout << "1. Newton-Raphson para sistemas" << endl;
+		cout << "2. Inversa de una matriz por PLUQ" << endl;
+		cout << "3. Cuadratura de Gauss" << endl;
+		cout << "4. Diferencia finita" << endl;
+		cout << "5. Salir" << endl;
+		cout << "Opción seleccionada: ";
 		char c;
 		cin >> c;
 		switch(c){
@@ -45,7 +46,7 @@ int main(int argc, char* argv[]){
 				newton nR(xo, tol, f, g);
 				x = nR.eval();
 				cout.precision(6);
-				cout << setw(5) << "Valor de x: " << x << endl;	
+				cout << endl << "Valor de x: " << x << endl;	
 			}
 			break;
 			case '2':{
