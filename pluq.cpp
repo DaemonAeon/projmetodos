@@ -101,7 +101,7 @@ void pluq::calculate(){
 			for (int k = 0; k < n; k++){
 				U[j][k]=U[j][k]+U[i][k]*((U[j][i]*-1)/U[i][i]);
 			}
-		}
+		}*/
 
 		cout << setw(15) << "U" << endl;
 		for (int j = 0; j < n; j++){
@@ -110,7 +110,8 @@ void pluq::calculate(){
 			}
 			cout << endl;
 		}
-		cout << endl;*/
+		cout << endl;
+	break;
 
 	}
 
@@ -203,7 +204,18 @@ void pluq::calculate(){
 
 void pluq::lu(){
 	int i = 0, j = 0, k = 0;
+
+	for(i = 0; i < n; i++)
+		for(j = 0; j < n; j++){
+			A[i][j] = U[i][j];
+			U[i][j] = 0;
+		}
+	
+	
+
+
 	for(k=0;k<n;k++) {
+		
 		L[k][k]=1;
 	 
 		for(j=k;j<n;j++) {
