@@ -50,6 +50,11 @@ int main(int argc, char* argv[]){
 			break;
 			case '2':{
 				//PLUQ
+				int n;
+				cout << "Ingrese el tamaño de la matriz (n): ";
+				cin >> n;
+				pluq p(n);
+				p.calculate();
 			}
 			break;
 			case '3':{
