@@ -137,9 +137,9 @@ void pluq::calculate(){
 		//UY=X
 		//Sustitución hacia atrás
 		AInversa[n-1][i]=D[n-1];
-		for (int j = n-2; j > 0; j--){
+		for (int j = n-2; j > -1; j--){
 			double sum = 0;
-			for (int k = n-1; k > j; k--){
+			for (int k = n-1; k > j-1; k--){
 				sum+=U[j][k]*AInversa[k][i];
 			}
 			AInversa[j][i] = (D[j]-sum)/U[j][j];
