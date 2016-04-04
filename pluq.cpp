@@ -89,34 +89,27 @@ void pluq::calculate(){
 			U[j][c]=temp;
 		}
 
-
 		//L y U
-		/*for (int j = i+1; j < n; j++){
-			if (((U[j][i]*-1)/U[i][i])>0){
-				L[j][i]=U[j][i]/U[i][i];
+		int h = 0;
+		bool pos=false;
+		for (int j = i+1; j < n; j++){
+			double l = U[j][i]/U[i][i];
+			if (l<0){
+				L[j][i]=l;
 				L[j][i]=L[j][i]*-1;
+				pos=false;
 			} else {
-				L[j][i]=U[j][i]/U[i][i];
+				L[j][i]=l;
+				pos=true;
 			}
-			for (int k = 0; k < n; k++){
+			for (int k = j - h; k < n; k++){
 				U[j][k]=U[j][k]+U[i][k]*((U[j][i]*-1)/U[i][i]);
 			}
-		}*/
-
-		cout << setw(15) << "U" << endl;
-		for (int j = 0; j < n; j++){
-			for (int k = 0; k < n; k++){
-				cout << setw(5) << setprecision(2) << U[j][k];
-			}
-			cout << endl;
+			U[j][i] = 0;
+			h++;
 		}
-		cout << endl;
-	break;
 
 	}
-
-	//L y U
-	lu();
 
 	//Inversa
 	for (int i = 0; i < n; i++){
@@ -134,7 +127,7 @@ void pluq::calculate(){
 		D[0]=I[0];
 		for (int j = 1; j < n; j++){
 			double sum = 0;
-			for (int k = 0; k < j; k++){
+			for (int k = 0; k < j-1; k++){
 				sum+=L[j][k]*D[k];
 			}
 			D[j] = I[j]-sum;
@@ -146,7 +139,7 @@ void pluq::calculate(){
 		for (int j = n-2; j > 0; j--){
 			double sum = 0;
 			for (int k = n-1; k > j; k--){
-				sum+=U[j][k]*AInversa[k][j];
+				sum+=U[j][k]*AInversa[k][i];
 			}
 			AInversa[j][i] = (D[j]-sum)/U[j][j];
 		}
@@ -155,7 +148,7 @@ void pluq::calculate(){
 	cout << setw(15) << "P" << endl;
 	for (int j = 0; j < n; j++){
 		for (int k = 0; k < n; k++){
-			cout << setw(5) << setprecision(2) << P[j][k];
+			cout << setw(10) << setprecision(2) << P[j][k];
 		}
 		cout << endl;
 	}
@@ -163,7 +156,7 @@ void pluq::calculate(){
 	cout << setw(15) << "A" << endl;
 	for (int j = 0; j < n; j++){
 		for (int k = 0; k < n; k++){
-			cout << setw(5) << setprecision(2) << A[j][k];
+			cout << setw(10) << setprecision(2) << A[j][k];
 		}
 		cout << endl;
 	}
@@ -171,7 +164,7 @@ void pluq::calculate(){
 	cout << setw(15) << "Q" << endl;
 	for (int j = 0; j < n; j++){
 		for (int k = 0; k < n; k++){
-			cout << setw(5) << setprecision(2) << Q[j][k];
+			cout << setw(10) << setprecision(2) << Q[j][k];
 		}
 		cout << endl;
 	}
@@ -179,7 +172,7 @@ void pluq::calculate(){
 	cout << setw(15) << "L" << endl;
 	for (int j = 0; j < n; j++){
 		for (int k = 0; k < n; k++){
-			cout << setw(5) << setprecision(2) << L[j][k];
+			cout << setw(10) << setprecision(2) << L[j][k];
 		}
 		cout << endl;
 	}
@@ -187,7 +180,7 @@ void pluq::calculate(){
 	cout << setw(15) << "U" << endl;
 	for (int j = 0; j < n; j++){
 		for (int k = 0; k < n; k++){
-			cout << setw(5) << setprecision(2) << U[j][k];
+			cout << setw(10) << setprecision(2) << U[j][k];
 		}
 		cout << endl;
 	}
@@ -195,7 +188,7 @@ void pluq::calculate(){
 	cout << setw(15) << "A Inversa" << endl;
 	for (int j = 0; j < n; j++){
 		for (int k = 0; k < n; k++){
-			cout << setw(5) << setprecision(2) << AInversa[j][k];
+			cout << setw(10) << setprecision(2) << AInversa[j][k];
 		}
 		cout << endl;
 	}
@@ -205,14 +198,21 @@ void pluq::calculate(){
 void pluq::lu(){
 	int i = 0, j = 0, k = 0;
 
+	double** Atemp = new double*[n];
+	for (int a = 0; a < n; a++){
+		Atemp[a] = new double[n];
+	}
+	for (int a = 0; a < n; a++){
+		for (int b = 0; b < n; b++){
+			Atemp[a][b] = A[a][b];
+		}
+	}
+
 	for(i = 0; i < n; i++)
 		for(j = 0; j < n; j++){
-			A[i][j] = U[i][j];
+			Atemp[i][j] = U[i][j];
 			U[i][j] = 0;
 		}
-	
-	
-
 
 	for(k=0;k<n;k++) {
 		
@@ -223,7 +223,7 @@ void pluq::lu(){
 			for(int s=0;s<=k-1;s++) {
 			    sum+= L[k][s]*U[s][j];
 			}
-			U[k][j]=A[k][j]-sum;
+			U[k][j]=Atemp[k][j]-sum;
 		}
 	 
 		for(i=k+1;i<n;i++) {
@@ -231,7 +231,7 @@ void pluq::lu(){
 			for(int s=0;s<=k-1;s++) {
 			    sum+=L[i][s]*U[s][k];
 			}
-			L[i][k]=(A[i][k]-sum)/U[k][k];
+			L[i][k]=(Atemp[i][k]-sum)/U[k][k];
 		}
 	}
 
